@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 
 from config import DevelopmentConfig
 
-from .controller import bus_blueprint
+from .controller import bus_blueprint, route_blueprint, trip_blueprint
 
 
 def create_app(config=None):
@@ -17,6 +17,8 @@ def create_app(config=None):
         pass
 
     app.register_blueprint(bus_blueprint())
+    app.register_blueprint(route_blueprint())
+    app.register_blueprint(trip_blueprint())
 
     @app.route("/status")
     def server_status():
