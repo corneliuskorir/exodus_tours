@@ -4,8 +4,8 @@ This tool is meant to simulate the bus booking, customer registration and trip t
 ## Set Up
 clone the project to local machine  
 Run:  
-'''
+```
 pipenv install
 pipenv shell
 python app/app.py
-'''
+```
