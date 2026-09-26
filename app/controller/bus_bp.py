@@ -1,13 +1,16 @@
 from flask import Blueprint, jsonify, request
 
+from ..services import BusService
 
-def bus_blueprint():
+
+def bus_blueprint(service: BusService):
     """Bus blueprint controller"""
     blueprint = Blueprint("bus", __name__, url_prefix="/api/v1/buses")
 
     @blueprint.route("/", methods=["GET"])
     def get_buses():
         """return list of buses"""
+        bus_list = service.get_all()
         return jsonify({"message": "Get bus list"}), 200
 
     @blueprint.route("/", methods=["POST"])
@@ -15,25 +18,26 @@ def bus_blueprint():
         """add new bus"""
         # get bus json data from request
         data = request.get_json()
-        # todo: create bus object using data and send to service
+        bus = service.add_bus(data)
         return ("Add new bus", 201)
 
     @blueprint.route("/<int:id>", methods=["GET"])
     def get_bus(id):
         """get bus"""
-        # todo: retrieve bus from bust list
+        bus = service.get_bus(id)
         return (f"Get bus using id {id}", 200)
 
     @blueprint.route("/<int:id>", methods=["PATCH"])
     def edit_bus(id):
         """edit bus"""
         data = request.get_json()
-        # todo: use dict to update bus
+        bus = service.update(id, data)
         return (f"Update bus id {id}", 200)
 
     @blueprint.route("/<int:id>", methods=["DELETE"])
     def delete_bus(id):
         """Delete bus"""
+        service.delete(id)
         return ("Delete bus", 204)
 
     return blueprint
