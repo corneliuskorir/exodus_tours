@@ -2,6 +2,8 @@ from flask import Flask, jsonify
 
 from config import DevelopmentConfig
 
+from .controller import bus_blueprint
+
 
 def create_app(config=None):
     if config == None:
@@ -13,6 +15,8 @@ def create_app(config=None):
     if app.config.get("SEED_DATA"):
         # todo: seed data
         pass
+
+    app.register_blueprint(bus_blueprint())
 
     @app.route("/status")
     def server_status():
