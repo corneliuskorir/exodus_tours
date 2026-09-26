@@ -27,7 +27,7 @@ class TripInterface(ABC):
         """get trip passenger list"""
 
     @abstractmethod
-    def add_passenger(self, id):
+    def add_passenger(self, id, data):
         """add passenger to trip"""
 
     @abstractmethod

@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from config import DevelopmentConfig
 
 from .controller import bus_blueprint, route_blueprint, trip_blueprint
+from .services import BusService, RouteService, TripService
 
 
 def create_app(config=None):
@@ -16,9 +17,13 @@ def create_app(config=None):
         # todo: seed data
         pass
 
-    app.register_blueprint(bus_blueprint())
-    app.register_blueprint(route_blueprint())
-    app.register_blueprint(trip_blueprint())
+    bus_service = BusService()
+    route_service = RouteService()
+    trip_service = TripService()
+
+    app.register_blueprint(bus_blueprint(service=bus_service))
+    app.register_blueprint(route_blueprint(service=route_service))
+    app.register_blueprint(trip_blueprint(service=trip_service))
 
     @app.route("/status")
     def server_status():

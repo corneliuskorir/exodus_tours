@@ -1,4 +1,4 @@
-from interface import BusInterface
+from .interface import BusInterface
 
 
 class BusService(BusInterface):

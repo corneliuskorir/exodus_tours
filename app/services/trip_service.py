@@ -1,4 +1,4 @@
-from interface import TripInterface
+from .interface import TripInterface
 
 
 class TripService(TripInterface):
@@ -11,6 +11,9 @@ class TripService(TripInterface):
     def add_trip(self, data):
         pass
 
+    def get_trip(self, id):
+        pass
+
     def update_trip(self, id, data):
         pass
 
@@ -20,7 +23,10 @@ class TripService(TripInterface):
     def get_passengers(self, id):
         pass
 
-    def add_passenger(self, id):
+    def add_passenger(self, id, data):
+        pass
+
+    def get_passenger(self, id, pass_id):
         pass
 
     def update_passenger(self, id, pass_id):

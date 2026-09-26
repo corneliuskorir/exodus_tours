@@ -1,13 +1,16 @@
 from flask import Blueprint, jsonify, request
 
+from ..services import TripService
 
-def trip_blueprint():
+
+def trip_blueprint(service: TripService):
     """trip blueprint controller"""
     blueprint = Blueprint("trip", __name__, url_prefix="/api/v1/trips")
 
     @blueprint.route("/", methods=["GET"])
     def get_trips():
         """return list of trips"""
+        all_trips = service.get_all()
         return jsonify({"message": "Get trip list"}), 200
 
     @blueprint.route("/", methods=["POST"])
@@ -15,25 +18,26 @@ def trip_blueprint():
         """add new trip"""
         # get trip json data from request
         data = request.get_json()
-        # todo: create trip object using data and send to service
+        trip = service.add_trip(data=data)
         return ("Add new trip", 201)
 
     @blueprint.route("/<int:id>", methods=["GET"])
     def get_trip(id):
         """get trip"""
-        # todo: retrieve trip from trip list
+        trip = service.get_trip(id=id)
         return (f"Get trip using id {id}", 200)
 
     @blueprint.route("/<int:id>", methods=["PATCH"])
-    def edit_trip(id):
+    def update_trip(id):
         """edit trip"""
         data = request.get_json()
-        # todo: use dict to update trip
+        trip = service.update_trip(id=id, data=data)
         return (f"Update trip id {id}", 200)
 
     @blueprint.route("/<int:id>", methods=["DELETE"])
     def delete_trip(id):
         """Delete trip"""
+        service.delete_trip(id=id)
         return ("Delete trip", 204)
 
     # add, remove, list customers ( consider moving to own blueprint)
@@ -41,31 +45,33 @@ def trip_blueprint():
     @blueprint.route("/<int:id>/passengers", methods=["GET"])
     def get_passengers(id):
         """get passenger list from trip"""
+        all_passengers = service.get_passengers(id=id)
         return jsonify({"message": f"list of passengers in trip id {id}"}), 200
 
     @blueprint.route("/<int:id>/passengers", methods=["POST"])
     def add_passengers(id):
         """add passenger to trip"""
         data = request.get_json()
-        # todo: use data to create passenger and add to trip if seat available
+        passenger = service.add_passenger(data=data)
         return (f"Add passenger to trip id {id}", 201)
 
     @blueprint.route("/<int:id>/passengers/<int:pass_id>", methods=["GET"])
     def get_passenger(id, pass_id):
         """get passenger"""
-        # todo: retrieve trip from trip list
+        passenger = service.get_passenger(id=id, pass_id=pass_id)
         return (f"Get passenger in trid id {id} of id {pass_id}", 200)
 
     @blueprint.route("/<int:id>/passengers/<int:pass_id>", methods=["PATCH"])
     def edit_passenger(id, pass_id):
         """edit passenger"""
         data = request.get_json()
-        # todo: use dict to update trip
+        passenger = service.add_passenger(id=id, pass_id=pass_id, data=data)
         return (f"Update passenger in trip id {id} of id {pass_id}", 200)
 
     @blueprint.route("/<int:id>/passengers/<int:pass_id>", methods=["DELETE"])
     def delete_passenger(id, pass_id):
         """Delete passenger"""
+        service.delete_passenger(id=id, pass_id=pass_id)
         return (f"Delete passenger in trip id {id} of {pass_id}", 204)
 
     return blueprint

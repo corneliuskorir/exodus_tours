@@ -1,4 +1,4 @@
-from interface import RouteInterface
+from .interface import RouteInterface
 
 
 class RouteService(RouteInterface):
