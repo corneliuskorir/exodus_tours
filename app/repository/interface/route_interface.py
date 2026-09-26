@@ -1,23 +1,23 @@
 from abc import ABC, abstractmethod
 
 
-class BusInterface(ABC):
+class RouteInterface(ABC):
     @abstractmethod
     def get_all(self):
-        """get bus list"""
+        """get routes list"""
 
     @abstractmethod
-    def add_bus(self, data):
-        """add bus"""
+    def add_route(self, data):
+        """add new route"""
 
     @abstractmethod
-    def get_bus(self, id):
-        """get bus"""
+    def get_route(self, id):
+        """get route"""
 
     @abstractmethod
     def update(self, id, data):
-        """update bus"""
+        """update route"""
 
     @abstractmethod
     def delete(self, id):
-        """delete bus"""
+        """delete route"""

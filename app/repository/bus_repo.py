@@ -5,7 +5,7 @@ class BusRepository(BusInterface):
     def __init__(self):
         pass
 
-    def get_all():
+    def get_all(self):
         pass
 
     def add_bus(self, data):
