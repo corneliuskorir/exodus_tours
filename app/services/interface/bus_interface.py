@@ -7,7 +7,7 @@ class BusInterface(ABC):
         """get bus list"""
 
     @abstractmethod
-    def add_bus(self, bus):
+    def add_bus(self, data):
         """add bus to data"""
 
     @abstractmethod

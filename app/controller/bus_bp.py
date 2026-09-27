@@ -16,28 +16,33 @@ def bus_blueprint(service: BusService):
     @blueprint.route("/", methods=["POST"])
     def add_bus():
         """add new bus"""
-        # get bus json data from request
         data = request.get_json()
-        bus = service.add_bus(data)
-        return ("Add new bus", 201)
+
+        return service.add_bus(data), 201
 
     @blueprint.route("/<int:id>", methods=["GET"])
     def get_bus(id):
         """get bus"""
-        bus = service.get_bus(id)
-        return (f"Get bus using id {id}", 200)
+        res = service.get_bus(id)
+        if res:
+            return jsonify(res), 200
+        return jsonify({"error": "Bus not found"}), 404
 
     @blueprint.route("/<int:id>", methods=["PATCH"])
     def edit_bus(id):
         """edit bus"""
         data = request.get_json()
-        bus = service.update(id, data)
-        return (f"Update bus id {id}", 200)
+        res = service.update(id, data)
+        if res:
+            return jsonify(res), 200
+        return jsonify({"error": "Bus not found"}), 404
 
     @blueprint.route("/<int:id>", methods=["DELETE"])
     def delete_bus(id):
         """Delete bus"""
-        service.delete(id)
-        return ("Delete bus", 204)
+        res = service.delete(id)
+        if res:
+            return jsonify({"message": "Bus deleted successfully"}), 204
+        return jsonify({"error": "Bus not found"}), 404
 
     return blueprint

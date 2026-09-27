@@ -17,12 +17,15 @@ class BusRepository(BusInterface):
         return bus
 
     def update(self, id, data):
-        bus = next((b for b in self._db if b["id"] == id), None)
-        if bus:
-            bus |= data
-            self._db = [b for b in self._db if b[id] != id].append(bus)
+        bus = self.get_bus(id)
+        if not bus:
+            return None
+        bus.update(data)
         return bus
 
     def delete(self, id):
-        # todo: return something to validate deletion
-        self._db = [b for b in self._db if b[id] != id]
+        bus = self.get_bus(id=id)
+        if not bus:
+            return False
+        self._db.remove(bus)
+        return True
