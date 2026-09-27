@@ -2,10 +2,11 @@ from dataclasses import asdict, dataclass
 
 
 @dataclass
-class Route:
+class Passenger:
     id: int
-    destinations: tuple
-    fare: int
+    name: str
+    seat_number: int
+    trip_id: int
 
     def to_dict(self):
         return asdict(self)
