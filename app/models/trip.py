@@ -1,23 +1,29 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 
-from .bus import Bus
 from .passenger import Passenger
-from .route import Route
 
 
 @dataclass
 class Trip:
     id: int
-    bus: Bus
-    route: Route
-    available_seats: int
-    status: str
-    passengers: list[Passenger]
+    bus_id: int
+    route_id: int
+    status: str = "pending"
+    passengers: list[Passenger] = field(default_factory=list)
+    available_seats: int = 0
 
     def __post_init(self):
-        self.available_seats = self.bus.seats
         if self.status not in ("pending", "complete", "in_progress"):
             raise ValueError("status must be pending, complete, in_progress")
 
     def to_dict(self):
         return asdict(self)
+
+
+"""
+{
+    "id":1,
+    "bus_id":1,
+    "route_id":1
+}
+"""

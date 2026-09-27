@@ -24,7 +24,7 @@ def create_app(config=None):
 
     bus_service = BusService(repository=bus_repo)
     route_service = RouteService(repository=route_repo)
-    trip_service = TripService(repository=trip_repo)
+    trip_service = TripService(repository=trip_repo, bus_service=bus_service)
 
     app.register_blueprint(bus_blueprint(service=bus_service))
     app.register_blueprint(route_blueprint(service=route_service))

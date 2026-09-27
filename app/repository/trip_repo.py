@@ -17,10 +17,10 @@ class TripRepository(TripInterface):
         return trip
 
     def update_trip(self, id, data):
-        trip = next((t for t in self._db if t["id"] == id), None)
-        if trip:
-            trip |= data
-            self._db = [t for t in self._db if t["id"] != id].append(trip)
+        trip = self.get_trip(id)
+        if not trip:
+            return None
+        trip.update(data)
 
         return trip
 

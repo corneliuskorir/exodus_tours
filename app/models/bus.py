@@ -10,3 +10,13 @@ class Bus:
 
     def to_dict(self):
         return asdict(self)
+
+
+"""
+{
+    "id":1,
+    "driver":"Mat",
+    "route_id":1,
+    "seats":60
+}
+"""
