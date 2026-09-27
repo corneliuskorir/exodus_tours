@@ -16,23 +16,28 @@ def trip_blueprint(service: TripService):
     @blueprint.route("/", methods=["POST"])
     def add_trip():
         """add new trip"""
-        # get trip json data from request
         data = request.get_json()
         trip = service.add_trip(data=data)
-        return ("Add new trip", 201)
+        if not trip:
+            return jsonify({"error": "Something went wrong."}), 404
+        return jsonify(trip), 200
 
     @blueprint.route("/<int:id>", methods=["GET"])
     def get_trip(id):
         """get trip"""
         trip = service.get_trip(id=id)
-        return (f"Get trip using id {id}", 200)
+        if trip:
+            return jsonify(trip), 200
+        return jsonify({"error": "trip not found"}), 404
 
     @blueprint.route("/<int:id>", methods=["PATCH"])
     def update_trip(id):
         """edit trip"""
         data = request.get_json()
         trip = service.update_trip(id=id, data=data)
-        return (f"Update trip id {id}", 200)
+        if trip:
+            return jsonify(trip), 200
+        return jsonify({"error": "Trip not found."})
 
     @blueprint.route("/<int:id>", methods=["DELETE"])
     def delete_trip(id):
