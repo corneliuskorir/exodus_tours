@@ -6,7 +6,7 @@ exodus_db = {
 
 
 def reset():
-    for value in exodus_db.value():
+    for value in exodus_db.values():
         value.clear()
 
 
