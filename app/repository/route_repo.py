@@ -2,20 +2,26 @@ from .interface import RouteInterface
 
 
 class RouteRepository(RouteInterface):
-    def __init__(self):
-        pass
+    def __init__(self, db: dict):
+        self._db: list = db["routes"]
 
     def get_all(self):
-        pass
+        return self._db
 
     def add_route(self, data):
-        pass
+        self._db.append(data)
 
     def get_route(self, id):
-        pass
+        route = next((r for r in self._db if r["id"] == id), None)
+        return route
 
     def update(self, id, data):
-        pass
+        route = next((r for r in self._db if r["id"] == id), None)
+        if route:
+            route |= data
+            self._db = [r for r in self._db if r["id"] != id].append(route)
+
+        return route
 
     def delete(self, id):
-        pass
+        self._db = [r for r in self._db if r["id"] != id]

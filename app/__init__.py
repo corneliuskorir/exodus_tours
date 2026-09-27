@@ -19,8 +19,8 @@ def create_app(config=None):
         seed_data()
 
     bus_repo = BusRepository(db=exodus_db)
-    route_repo = RouteRepository()
-    trip_repo = TripRepository()
+    route_repo = RouteRepository(db=exodus_db)
+    trip_repo = TripRepository(db=exodus_db)
 
     bus_service = BusService(repository=bus_repo)
     route_service = RouteService(repository=route_repo)

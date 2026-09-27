@@ -9,7 +9,8 @@ class BusRepository(BusInterface):
         return self._db
 
     def add_bus(self, data):
-        return self._db.append(data)
+        self._db.append(data)
+        return data
 
     def get_bus(self, id):
         bus = next((b for b in self._db if b["id"] == id), None)
@@ -19,8 +20,7 @@ class BusRepository(BusInterface):
         bus = next((b for b in self._db if b["id"] == id), None)
         if bus:
             bus |= data
-            self._db = [b for b in self._db if b[id] != id]
-            self._db.append(bus)
+            self._db = [b for b in self._db if b[id] != id].append(bus)
         return bus
 
     def delete(self, id):
