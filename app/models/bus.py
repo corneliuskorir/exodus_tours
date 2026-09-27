@@ -1,7 +1,5 @@
 from dataclasses import asdict, dataclass
 
-from .route import Route
-
 
 @dataclass
 class Bus:
