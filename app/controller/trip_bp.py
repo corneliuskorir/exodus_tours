@@ -11,7 +11,7 @@ def trip_blueprint(service: TripService):
     def get_trips():
         """return list of trips"""
         all_trips = service.get_all()
-        return jsonify({"message": "Get trip list"}), 200
+        return jsonify(all_trips), 200
 
     @blueprint.route("/", methods=["POST"])
     def add_trip():
@@ -65,7 +65,7 @@ def trip_blueprint(service: TripService):
     def edit_passenger(id, pass_id):
         """edit passenger"""
         data = request.get_json()
-        passenger = service.add_passenger(id=id, pass_id=pass_id, data=data)
+        passenger = service.update_passenger(id=id, pass_id=pass_id, data=data)
         return (f"Update passenger in trip id {id} of id {pass_id}", 200)
 
     @blueprint.route("/<int:id>/passengers/<int:pass_id>", methods=["DELETE"])

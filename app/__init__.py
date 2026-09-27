@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 
 from config import DevelopmentConfig
+from data import exodus_db, seed_data
 
 from .controller import bus_blueprint, route_blueprint, trip_blueprint
 from .repository import BusRepository, RouteRepository, TripRepository
@@ -15,12 +16,11 @@ def create_app(config=None):
     app.config.from_object(config)
 
     if app.config.get("SEED_DATA"):
-        # todo: seed data
-        pass
+        seed_data()
 
-    bus_repo = BusRepository()
-    route_repo = RouteRepository()
-    trip_repo = TripRepository()
+    bus_repo = BusRepository(db=exodus_db)
+    route_repo = RouteRepository(db=exodus_db)
+    trip_repo = TripRepository(db=exodus_db)
 
     bus_service = BusService(repository=bus_repo)
     route_service = RouteService(repository=route_repo)

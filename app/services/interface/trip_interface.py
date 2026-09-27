@@ -35,7 +35,7 @@ class TripInterface(ABC):
         """get passenger"""
 
     @abstractmethod
-    def update_passenger(self, id, pass_id):
+    def update_passenger(self, id, pass_id, data):
         """update trip passenger"""
 
     @abstractmethod

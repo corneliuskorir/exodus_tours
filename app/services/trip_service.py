@@ -30,8 +30,8 @@ class TripService(TripInterface):
     def get_passenger(self, id, pass_id):
         return self._repo.get_passenger(id=id, pass_id=pass_id)
 
-    def update_passenger(self, id, pass_id):
-        return self._repo.update_passenger(id=id, pass_id=pass_id)
+    def update_passenger(self, id, pass_id, data):
+        return self._repo.update_passenger(id=id, pass_id=pass_id, data=data)
 
     def delete_passenger(self, id, pass_id):
         self._repo.delete_passenger(id=id, pass_id=pass_id)

@@ -11,7 +11,7 @@ def bus_blueprint(service: BusService):
     def get_buses():
         """return list of buses"""
         bus_list = service.get_all()
-        return jsonify({"message": "Get bus list"}), 200
+        return jsonify(bus_list), 200
 
     @blueprint.route("/", methods=["POST"])
     def add_bus():
