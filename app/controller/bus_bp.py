@@ -16,10 +16,9 @@ def bus_blueprint(service: BusService):
     @blueprint.route("/", methods=["POST"])
     def add_bus():
         """add new bus"""
-        # get bus json data from request
         data = request.get_json()
-        bus = service.add_bus(data)
-        return ("Add new bus", 201)
+
+        return service.add_bus(data), 201
 
     @blueprint.route("/<int:id>", methods=["GET"])
     def get_bus(id):

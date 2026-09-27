@@ -7,7 +7,7 @@ from .route import Route
 class Bus:
     id: int
     driver: str
-    route: Route
+    route_id: int
     seats: int
 
     def to_dict(self):
