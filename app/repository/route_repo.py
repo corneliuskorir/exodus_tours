@@ -10,18 +10,23 @@ class RouteRepository(RouteInterface):
 
     def add_route(self, data):
         self._db.append(data)
+        return data
 
     def get_route(self, id):
         route = next((r for r in self._db if r["id"] == id), None)
         return route
 
     def update(self, id, data):
-        route = next((r for r in self._db if r["id"] == id), None)
-        if route:
-            route |= data
-            self._db = [r for r in self._db if r["id"] != id].append(route)
+        route = self.get_route(id)
+        if not route:
+            return None
+        route.update(data)
 
         return route
 
     def delete(self, id):
-        self._db = [r for r in self._db if r["id"] != id]
+        route = self.get_route(id)
+        if not route:
+            return False
+        self._db.remove(route)
+        return True

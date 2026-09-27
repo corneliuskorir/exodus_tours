@@ -18,26 +18,32 @@ def route_blueprint(service: RouteService):
         """add new route"""
         # get route json data from request
         data = request.get_json()
-        route = service.add_route(data=data)
-        return ("Add new route", 201)
+        res = service.add_route(data=data)
+        return jsonify(res), 200
 
     @blueprint.route("/<int:id>", methods=["GET"])
     def get_route(id):
         """get route"""
         route = service.get_route(id=id)
-        return (f"Get route using id {id}", 200)
+        if route:
+            return jsonify(route), 200
+        return jsonify({"error": "route not found."}), 404
 
     @blueprint.route("/<int:id>", methods=["PATCH"])
     def edit_route(id):
         """edit route"""
         data = request.get_json()
         route = service.update(id=id, data=data)
-        return (f"Update route id {id}", 200)
+        if route:
+            return jsonify(route), 200
+        return jsonify({"error": "Route not found"}), 404
 
     @blueprint.route("/<int:id>", methods=["DELETE"])
     def delete_route(id):
         """Delete route"""
-        service.delete(id=id)
-        return ("Delete route", 204)
+        res = service.delete(id=id)
+        if res:
+            return jsonify({"message": "Route deleted successfully."}), 204
+        return jsonify({"error": "Route not found."})
 
     return blueprint
